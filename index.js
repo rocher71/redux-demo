@@ -13,3 +13,23 @@ function buyCake() {
     info: 'First redux action'
   }
 }
+
+// reducer
+// (previousState, action) => newState
+// state has to be represented by a single object
+
+const initialState = {
+  numOfCakes: 10
+}
+
+const reducer = (state = initialState, action) => {
+  switch(action.type){
+    case BUY_CAKE: return {
+      ...state, 
+      //first make a copy of state object! so that other properties might not change
+      numOfCakes: state.numOfCakes - 1
+    }
+    
+    default: return state
+  }
+}
