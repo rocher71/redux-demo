@@ -3,6 +3,8 @@ const redux = require('redux')
 const createStore = redux.createStore
 
 const BUY_CAKE = 'BUY_CAKE';
+const BUY_ICECREAM = 'BUY_ICECREAM';
+
 
 //define action : object that has a 'type' property
 // {
@@ -18,11 +20,18 @@ function buyCake() {
   }
 }
 
+function buyIceCream() {
+  return {
+    type: BUY_ICECREAM,
+  }
+}
+
 // reducer
 // (previousState, action) => newState
 // state has to be represented by a single object
 const initialState = {
-  numOfCakes: 10
+  numOfCakes: 10,
+  numOfIceCreams: 20
 }
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +40,12 @@ const reducer = (state = initialState, action) => {
       ...state, 
       //first make a copy of state object! so that other properties might not change
       numOfCakes: state.numOfCakes - 1
+    }
+
+    case BUY_ICECREAM: return {
+      ...state, 
+      //first make a copy of state object! so that other properties might not change
+      numOfIceCreams: state.numOfIceCreams - 1
     }
     
     default: return state
@@ -59,6 +74,9 @@ const unsubscribe = store.subscribe(() => console.log("updated state :", store.g
 store.dispatch(buyCake()); //action of buying a cake
 store.dispatch(buyCake());
 store.dispatch(buyCake());
+store.dispatch(buyIceCream());
+store.dispatch(buyIceCream());
+
 
 // unsubscribe from the store by calling the function returned by the subscribe method.
 unsubscribe();
