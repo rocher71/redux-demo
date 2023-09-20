@@ -1,7 +1,11 @@
 //since it's vanilla js, 'require' is used.
-const redux = require('redux')
-const createStore = redux.createStore
-const combineReducers = redux.combineReducers
+const redux = require('redux');
+const reduxLogger = require('redux-logger');
+
+const createStore = redux.createStore;
+const combineReducers = redux.combineReducers;
+const applyMiddleWare = redux.applyMiddleware;
+const logger = reduxLogger.createLogger();
 
 const BUY_CAKE = 'BUY_CAKE';
 const BUY_ICECREAM = 'BUY_ICECREAM';
@@ -79,14 +83,15 @@ const rootReducer = combineReducers({
   cake: cakeReducer,
   iceCream: iceCreamReducer
 })
-const store = createStore(rootReducer); 
+// can pass as many middlewares you want
+const store = createStore(rootReducer, applyMiddleWare(logger)); 
 
 //expose a method that gives the current state in the store.
-console.log("initial state : ", store.getState());
+console.log("Initial state : ", store.getState());
 
 //allow app to subscribe to changes in the store that is achieved using the subscribe()
 //listener to the store, so anytime the store updates, this runs
-const unsubscribe = store.subscribe(() => console.log("updated state :", store.getState()));
+const unsubscribe = store.subscribe(() => {});
 
 // dispatch accepts an actions as parameter. 
 // can directly provide the action, but use an action creator, which return the action.
@@ -95,6 +100,9 @@ store.dispatch(buyCake());
 store.dispatch(buyCake());
 store.dispatch(buyIceCream());
 store.dispatch(buyIceCream());
+
+//when we dispatch an action, both the reducers recieve the action
+// one acts and one ignores.
 
 
 // unsubscribe from the store by calling the function returned by the subscribe method.
