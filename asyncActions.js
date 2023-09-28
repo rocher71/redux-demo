@@ -67,7 +67,7 @@ const reducer = (state = initialState, action) => {
 const fetchUsers = () => {
   return function(dispatch) {
     dispatch(fetchUsersRequest); //set loading true
-    axios.get('http://jsonplacdfeholder.typicode.com/users')
+    axios.get('http://jsonplaceholder.typicode.com/users')
       .then(response => {
         //response.data is array of users
         const users = response.data.map(user => user.id);
